@@ -38,6 +38,7 @@ import java.util.ArrayList;
 
 public class receiverpictureactivity extends AppCompatActivity {
 
+    //to make sure back button doesn't open old images
     @Override
     protected void onNewIntent(Intent intent) {
     finish();
@@ -50,7 +51,7 @@ public class receiverpictureactivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //makes Window Fullscreen and show ontop of the Lockscreen
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_receiverpictureactivity);
@@ -58,8 +59,8 @@ public class receiverpictureactivity extends AppCompatActivity {
         wind.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         wind.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //periodically checks if the screen is locked, if it is calls screenislocked()
         handly = new Handler();
-
         goahead = new Runnable() {
             @Override
             public void run() {
@@ -79,7 +80,7 @@ public class receiverpictureactivity extends AppCompatActivity {
 
     }
 
-    public void buttonpressed(View view) {
+    public void buttonpressed(View view) { //called when button is pressed
         screenislocked();
     }
 
@@ -91,6 +92,7 @@ public class receiverpictureactivity extends AppCompatActivity {
         screenLock.acquire(1);
 
         screenLock.release();
+        //removes handler, wakes up screen and realeases Wakelock immediately
 
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -100,13 +102,13 @@ public class receiverpictureactivity extends AppCompatActivity {
 
         ArrayList<Uri> imageUris = null;
 
-        if(Intent.ACTION_SEND.equals(action)) {
+        if(Intent.ACTION_SEND.equals(action)) { //puts Uris into an array, wheter there is one or multiple
             Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             imageUris = new ArrayList<>();
             imageUris.add(imageUri);
         } else if(Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-        }
+        } //puts Uris into an array, wheter there is one or multiple
 
         DemoCollectionPagerAdapter.setCounts(imageUris.size());
         DemoCollectionPagerAdapter.setUris(imageUris);
@@ -131,7 +133,7 @@ public class receiverpictureactivity extends AppCompatActivity {
 
         static ArrayList<Uri> uris;
 
-        public static void recreateafterpermission() {
+        public static void recreateafterpermission() { //this is called when the user gives permission to view file
             atp.notifyDataSetChanged();
         }
 
@@ -239,8 +241,6 @@ public class receiverpictureactivity extends AppCompatActivity {
                     .with(this)
                     .load(urinormal)
                     .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-            //.override(getActivity().findViewById(R.id.pager).getMeasuredWidth(),getActivity().findViewById(R.id.pager).getMeasuredHeight())
-            //.into(imageset);
                     .into(new GlideDrawableImageViewTarget(imageset) {
                         @Override
                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
@@ -257,8 +257,6 @@ public class receiverpictureactivity extends AppCompatActivity {
                     .with(this)
                     .load(urinormal)
                     .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    //.override(getActivity().findViewById(R.id.pager).getMeasuredWidth(),getActivity().findViewById(R.id.pager).getMeasuredHeight())
-                    //.into(imageset);
                     .into(new GlideDrawableImageViewTarget(imageset) {
                         @Override
                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
