@@ -207,7 +207,7 @@ public class receiverpictureactivity extends AppCompatActivity {
                             rootView=typeMethod(rootView,urinormal,container,type,inflater);
                         } else {
                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                            Toast.makeText(getActivity(), "Please enable storage permission for this photo", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), R.string.permission, Toast.LENGTH_LONG).show();
                         }
                     } else {
                         rootView=typeMethod(rootView,urinormal,container,type,inflater);

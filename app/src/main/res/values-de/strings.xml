@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Sichere Fotoanzeige</string>
+
+    <string name="lock_your_device">Sperre dein Handy</string>
+    <string name="pin">oder pinne diese App an und drücke hier:</string>
+    <string name="view">Anzeigen</string>
+
+    <string name="permission">Um dieses Foto anzuzeigen, wird die Berechtigung für den Speicherzugriff benötigt</string>
+</resources>
