@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Visualizador Seguro de Fotos</string>
+    <string name="view">Ver</string>
+    <string name="permission">Por favor, ative o armazenamento para ver essa foto</string>
+    <string name="lock_your_device">Bloqueie seu aparelho</string>
+    <string name="pin">ou fixe esse App e aperte aqui:</string>
+</resources>
