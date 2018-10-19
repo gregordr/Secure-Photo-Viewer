@@ -102,16 +102,16 @@ public class receiverpictureactivity extends AppCompatActivity {
 
         ArrayList<Uri> imageUris = null;
 
-        if(Intent.ACTION_SEND.equals(action)) { //puts Uris into an array, wheter there is one or multiple
+        if(Intent.ACTION_SEND.equals(action)) { //puts Uris into an array, whether there is one or multiple
             Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             imageUris = new ArrayList<>();
             imageUris.add(imageUri);
         } else if(Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-        } //puts Uris into an array, wheter there is one or multiple
+        } //puts Uris into an array, whether there is one or multiple
 
         DemoCollectionPagerAdapter.setCounts(imageUris.size());
-        DemoCollectionPagerAdapter.setUris(imageUris);
+        DemoCollectionPagerAdapter.setUris(imageUris, this);
 
         PagerAdapter mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
         DemoCollectionPagerAdapter.setAdapter(mDemoCollectionPagerAdapter);
@@ -132,13 +132,15 @@ public class receiverpictureactivity extends AppCompatActivity {
         }
 
         static ArrayList<Uri> uris;
+        static Context context;
 
         public static void recreateafterpermission() { //this is called when the user gives permission to view file
             atp.notifyDataSetChanged();
         }
 
-        public static void setUris(ArrayList<Uri> muri) {
+        public static void setUris(ArrayList<Uri> muri, Context c) {
             uris=muri;
+            context = c;
         }
 
         public static void setAdapter(PagerAdapter adapter) {
@@ -151,7 +153,16 @@ public class receiverpictureactivity extends AppCompatActivity {
             Fragment fragment = new DemoObjectFragment();
             Bundle args = new Bundle();
 
-            String stringuri = uris.get(i).toString();
+            uris.set(3, null);
+
+            Uri uri = uris.get(i);
+            String stringuri = "";
+            if(uri != null) {
+                stringuri = uri.toString();
+            } else {
+                Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show();
+            }
+
             args.putString("Uri",stringuri);
             fragment.setArguments(args);
             return fragment;

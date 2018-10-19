@@ -6,4 +6,5 @@
     <string name="view">View</string>
 
     <string name="permission">Please enable storage permission for this photo</string>
+    <string name="invalid">A file is invalid and can not be displayed.</string>
 </resources>

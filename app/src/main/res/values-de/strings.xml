@@ -6,4 +6,5 @@
     <string name="view">Anzeigen</string>
 
     <string name="permission">Um dieses Foto anzuzeigen, wird die Berechtigung für den Speicherzugriff benötigt</string>
+    <string name="invalid">Eine Datei ist beschädigt und kann nicht angezeigt werden</string>
 </resources>
