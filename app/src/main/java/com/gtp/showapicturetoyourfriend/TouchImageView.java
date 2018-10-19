@@ -209,6 +209,8 @@ public class TouchImageView extends ImageView {
         PointF topLeft = transformCoordTouchToBitmap(0, 0, true);
         PointF bottomRight = transformCoordTouchToBitmap(viewWidth, viewHeight, true);
 
+        if(getDrawable() == null) return new RectF(0,0,0,0);
+
         float w = getDrawable().getIntrinsicWidth();
         float h = getDrawable().getIntrinsicHeight();
         return new RectF(topLeft.x / w, topLeft.y / h, bottomRight.x / w, bottomRight.y / h);
@@ -1050,6 +1052,7 @@ public class TouchImageView extends ImageView {
      * @return Coordinates of the point touched, in the coordinate system of the original drawable.
      */
     private PointF transformCoordTouchToBitmap(float x, float y, boolean clipToBitmap) {
+        if(getDrawable() == null) return new PointF(0,0);
         matrix.getValues(m);
         float origW = getDrawable().getIntrinsicWidth();
         float origH = getDrawable().getIntrinsicHeight();
@@ -1074,6 +1077,7 @@ public class TouchImageView extends ImageView {
      * @return Coordinates of the point in the view's coordinate system.
      */
     private PointF transformCoordBitmapToTouch(float bx, float by) {
+        if(getDrawable() == null) return new PointF(0,0);
         matrix.getValues(m);
         float origW = getDrawable().getIntrinsicWidth();
         float origH = getDrawable().getIntrinsicHeight();
