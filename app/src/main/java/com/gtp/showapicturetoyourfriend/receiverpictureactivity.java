@@ -153,8 +153,6 @@ public class receiverpictureactivity extends AppCompatActivity {
             Fragment fragment = new DemoObjectFragment();
             Bundle args = new Bundle();
 
-            uris.set(3, null);
-
             Uri uri = uris.get(i);
             String stringuri = "";
             if(uri != null) {
