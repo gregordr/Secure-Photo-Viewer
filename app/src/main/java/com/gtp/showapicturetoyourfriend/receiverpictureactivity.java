@@ -32,7 +32,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-import com.bumptech.glide.request.target.Target;
+import com.kobakei.ratethisapp.RateThisApp;
 
 import java.util.ArrayList;
 
@@ -47,6 +47,8 @@ public class receiverpictureactivity extends AppCompatActivity {
 
     Handler handly;
     Runnable goahead;
+    int page = 0;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,16 @@ public class receiverpictureactivity extends AppCompatActivity {
         Window wind = this.getWindow();
         wind.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         wind.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getBoolean("ready", false)) {
+                page = savedInstanceState.getInt("pageItem", 0);
+                screenislocked();
+            }
+        }
+
+        RateThisApp.onCreate(this);
+        RateThisApp.showRateDialogIfNeeded(this);
 
         //periodically checks if the screen is locked, if it is calls screenislocked()
         handly = new Handler();
@@ -84,8 +96,22 @@ public class receiverpictureactivity extends AppCompatActivity {
         screenislocked();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mViewPager != null) {
+            outState.putInt("pageItem", mViewPager.getCurrentItem());
+            outState.putBoolean("ready", true);
+        } else {
+            outState.putBoolean("ready", false);
+        }
+    }
+
     public void screenislocked() {
-        handly.removeCallbacks(goahead);
+
+        if (handly != null) {
+            handly.removeCallbacks(goahead);
+        }
 
         PowerManager.WakeLock screenLock = ((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(
                 PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
@@ -115,9 +141,11 @@ public class receiverpictureactivity extends AppCompatActivity {
 
         PagerAdapter mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
         DemoCollectionPagerAdapter.setAdapter(mDemoCollectionPagerAdapter);
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+
+        mViewPager.setCurrentItem(page);
     }
 
     @Override
@@ -247,10 +275,11 @@ public class receiverpictureactivity extends AppCompatActivity {
         private void pictureSet(final TouchImageView imageset, Uri urinormal) {
 
             imageset.setMaxZoom(30);
-            Glide
-                    .with(this)
+
+            Glide.with(this)
                     .load(urinormal)
-                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .override(2000, 2000)
+                    //.override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .into(new GlideDrawableImageViewTarget(imageset) {
                         @Override
                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
@@ -263,10 +292,11 @@ public class receiverpictureactivity extends AppCompatActivity {
 
         private void pictureSetFile(final TouchImageView imageset, Uri urinormal) {
             imageset.setMaxZoom(30);
-            Glide
-                    .with(this)
+
+            Glide.with(this)
                     .load(urinormal)
-                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .override(2000, 2000)
+                    //.override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .into(new GlideDrawableImageViewTarget(imageset) {
                         @Override
                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
@@ -324,3 +354,5 @@ public class receiverpictureactivity extends AppCompatActivity {
 
     }
 }
+
+
