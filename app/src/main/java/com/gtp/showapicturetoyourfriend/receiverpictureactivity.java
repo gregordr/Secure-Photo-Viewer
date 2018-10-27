@@ -191,10 +191,11 @@ public class receiverpictureactivity extends AppCompatActivity {
             View rootView = null;
 
             Bundle args = getArguments();
-            Uri urinormal = Uri.parse(args.getString("Uri"));
+            String forUri = args.getString("Uri");
+            Uri urinormal = Uri.parse(forUri);
 
             String type = null;
-            String extension = MimeTypeMap.getFileExtensionFromUrl(args.getString("Uri"));
+            String extension = MimeTypeMap.getFileExtensionFromUrl(forUri.replace("~",""));
             if (extension != null) {
                 type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
             }
