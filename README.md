@@ -7,3 +7,7 @@ Now we have a solution: Select the pictures you want them to see in your gallery
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
 <a href="https://play.google.com/store/apps/details?id=com.gtp.showapicturetoyourfriend" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"/></a>
+
+# For developers:
+
+Clone this repo via Android Studio and let Gradle install all dependencies. Then build the project, and run it.
